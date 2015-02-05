@@ -1,3 +1,6 @@
+#ifndef QUADTREE_H_
+#define QUADTREE_H_
+
 #include <vector>
 
 using namespace std;
@@ -20,7 +23,7 @@ private:
 	float width;
 	float height;
 	int level;
-	int	 maxLevel;
+	int maxLevel;
 	vector<Object*>	objects;
 
 	Quadtree * parent;
@@ -32,3 +35,4 @@ private:
 
 	bool contains(Quadtree *child, Object *object);
 };
+#endif
