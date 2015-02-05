@@ -21,9 +21,9 @@ private:
 	float height;
 	int level;
 	int	 maxLevel;
-	vector<Object*>				objects;
+	vector<Object*>	objects;
 
-	Quadtree *	parent;
+	Quadtree * parent;
 	Quadtree * TopLeft;
 	Quadtree * TopRight;
 	Quadtree * BottomLeft;
