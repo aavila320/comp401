@@ -8,4 +8,4 @@ The Wikipedia site: http://en.wikipedia.org/wiki/Quadtree was also used extensiv
 
 Quadtree:
 A tree data structure in which each internal node has four children. Often times a QuadTree is used in gaming to detect collisions as well as special indexing and storing data. Each number is given a body ID which is a specified identification (for those numbers that were added). 
-Each QuadTree structure is broken into four different quadrants commonly called North West (NW), North East (NE), South West (SW) and South East (SE). Each quadrant is recursively divided to determine where nodes are to be placed. Once numbers are inserted, the nodes are split when their maximum capacity is reached. Child nodes are represented on the matrix in arrays
+Each QuadTree structure is broken into four different quadrants commonly called North West (NW), North East (NE), South West (SW) and South East (SE). Each quadrant is recursively divided to determine where nodes are to be placed. Once numbers are inserted, the nodes are split when their maximum capacity is reached. Child nodes are represented on the matrix in arrays.
