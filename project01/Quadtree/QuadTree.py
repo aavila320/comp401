@@ -7,7 +7,7 @@
 # spacial indexing and storing sparse data.
 # Quadrants are recursively divided into regions in a 2D space. 
 # Each node has a maximum capacity that can be filled and quadrants
-# are usually divided into NW,NE,SW and SE
+# are usually divided into NW,NE,SW and SE. The QuadTree operates in O(log n).
 # ###################################################################
 
 # Dictionaries for body parameters
@@ -54,7 +54,7 @@ def isempty(node):
         return True
 # This fucntion will add a body to the quadtree.
 # Body ID is an optional argument and unless unique 
-# is auto generateed. The number (positive int or float),
+# is auto generated. The number (positive int or float),
 # position (tuple or list (x,y)) and childnodes are passed as
 # arguments.
 def addbody(number, position1, childnodes, body_id=None):
@@ -141,6 +141,7 @@ def generate(top=0, topdown=True, gettop=True):
 def update(node=0):
     pass
 
+#Summary Report
 def summarize(brief=False, line=False):
     # Prints Quadtree as table
     # Prints how many nodes were created and how many bodies they fit into
@@ -207,7 +208,7 @@ if __name__ == '__main__':
 
     # Initialize the Quadtree
     # Uniform sets upper and lower limits
-    initiate((-5,-5), 10)
+    initiate((-5,-5), 10000000000000)
     r = range(4)
     n = (uniform(1,100) for i in r)
     p = ((uniform(-5,5),uniform(-5,5)) for i in r)
