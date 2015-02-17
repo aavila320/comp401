@@ -52,10 +52,11 @@ def isempty(node):
 
     if (not lowest_host_node[node]) and (not childnodes[node]):
         return True
-
-# Adds a body to the quadtree
-# Number -> positive int or float
-# Position1 -> tuple or list (x,y)
+# This fucntion will add a body to the quadtree.
+# Body ID is an optional argument and unless unique 
+# is auto generateed. The number (positive int or float),
+# position (tuple or list (x,y)) and childnodes are passed as
+# arguments.
 def addbody(number, position1, childnodes, body_id=None):
     if not body_id or body_id in numbers:
         body_id = newid()
