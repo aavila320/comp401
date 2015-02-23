@@ -1,15 +1,19 @@
 # ###################################################################
-# This program will implement a Quadtree. Numbers are chosen randomly
+# This program will implement a QuadTree. Numbers are chosen randomly
 # based on time. If nodes have been filled their children will be shown.
 # 
-# A Quadtree is a tree structure that is broken into four quadrants.
+# A QuadTree is a tree structure that is broken into four quadrants.
 # It is commonly used for collision detection in 2D and 3D gaming,
 # spacial indexing and storing sparse data.
 # Quadrants are recursively divided into regions in a 2D space. 
 # Each node has a maximum capacity that can be filled and quadrants
-# are usually divided into NW,NE,SW and SE. The QuadTree operates in O(log n).
+# are usually divided into NW,NE,SW and SE. 
+# Information was also output to driver.py file
 # ###################################################################
 
+
+outputFileName = "driver.py"
+outputFile = open( outputFileName, 'w' )
 # Dictionaries for body parameters
 numbers = {}
 positionx = {}
@@ -32,7 +36,7 @@ def newid(reset=False):
         ID += 1
     return ID
 
-# Initiate quadtree and initialize lengths and verticies
+# Initiate QuadTree and initialize lengths and vertices
 def initiate(vertex, length):  
     lengths[0] = length  # Length is the side length
     vertices[0] = vertex # Vetrex is the bottom right or SW
@@ -52,7 +56,7 @@ def isempty(node):
 
     if (not lowest_host_node[node]) and (not childnodes[node]):
         return True
-# This fucntion will add a body to the quadtree.
+# This fucntion will add a body to the QuadTree.
 # Body ID is an optional argument and unless unique 
 # is auto generated. The number (positive int or float),
 # position (tuple or list (x,y)) and childnodes are passed as
@@ -64,10 +68,10 @@ def addbody(number, position1, childnodes, body_id=None):
     positionx[body_id] = position1
     connect(body_id)
 
-# Can the node fift inside the body?
+# Can the node fit inside the body?
 # External -> Can't Fit, another body inside
 # Internal -> Cant't Fit, has child nodes
-# Empty -> Can Fit
+# Empty -> Can fit
 # None -> Out of bounds, can't fit at all
 def node_state(body, node):
     bx, by = positionx[body]
@@ -82,7 +86,7 @@ def node_state(body, node):
 
 # Splits given node (external or empty)
 # Divides into four (internal) quadrants
-# Rearrange -> nodes will be redistributed to appropriate  childnode and
+# Rearrange -> nodes will be redistributed to appropriate childnode and
 # be removed/detached from node itself
 def split(node, rearrange=True):
     nx, ny = vertices[node]
@@ -117,8 +121,8 @@ def connect(body, node=0):
                 if connect(body, child):
                     return True
 
-# Go through the quadtree and generate node IDs
-# Top =0  -> Walks through quadtree
+# Go through the QuadTree and generate node IDs
+# Top =0  -> Walks through QuadTree
 # Topdown -> parent node will be generated before child if True
 # Gettop -> top node is yielded
 def generate(top=0, topdown=True, gettop=True):
@@ -137,19 +141,22 @@ def generate(top=0, topdown=True, gettop=True):
         if gettop:
             yield top
 
-#Called to update Quadtree
+#Called to update QuadTree
 def update(node=0):
     pass
 
 #Summary Report
 def summarize(brief=False, line=False):
-    # Prints Quadtree as table
+    # Prints QuadTree as table
     # Prints how many nodes were created and how many bodies they fit into
     def report():
         global period
         print ("----------------------------------QuadTree Status------------------------------------------")
         print ("{0} nodes were created to fit {1} body IDs in {2} seconds!"
                .format(len(childnodes), len(numbers), style[2]%period))
+        outputFile.write(("----------------------------------QuadTree Status------------------------------------------"))
+        outputFile.write(("{0} nodes were created to fit {1} body IDs in {2} seconds!"
+               .format(len(childnodes), len(numbers), style[2]%period)))
     if brief:
         report()
         return
@@ -164,7 +171,7 @@ def summarize(brief=False, line=False):
     head1 = ["       BODY_ID", "#", "POSITION"]
     head2 = ["      NODE_ID", "  LENGTH", "VERTEX", " LOWEST_NODE", "CHILDREN"]
 
-# Use ennumerate to return a tuple
+# Use enumerate to return a tuple
 # Print the table and the items in the table
 # with correct formatting
 
@@ -173,6 +180,10 @@ def summarize(brief=False, line=False):
     print ("------------------------------QuadTree Matrix Report---------------------------------------") 
     print ()
     print (form1.format(*head1))
+    outputFile.write(("-------------------------------------------------------------------------------------------"))
+    outputFile.write(("------------------------------QuadTree Matrix Report---------------------------------------")) 
+    outputFile.write(("\n"))
+    outputFile.write((form1.format(*head1)))
     for i, body_id in enumerate(numbers):
         if line:
             if i % 2 == 0: space = style[6]
@@ -180,7 +191,9 @@ def summarize(brief=False, line=False):
         else: space = ''
         print (space+form1.format(body_id, style[2]%numbers[body_id],
                               style[3]%positionx[body_id]))
-# Prints the node IDs, length (based on the Bottom Right) and side lengths of the Quadtree                               
+        outputFile.write((space+form1.format(body_id, style[2]%numbers[body_id],
+                              style[3]%positionx[body_id])))
+# Prints the node IDs, length (based on the Bottom Right) and side lengths of the QuadTree                               
     print ()
     print (form2.format(*head2))
     for i, node_id in enumerate(childnodes):
@@ -191,8 +204,13 @@ def summarize(brief=False, line=False):
         print (space+form2.format(node_id, style[2]%lengths[node_id],
                               style[3]%vertices[node_id], lowest_host_node[node_id],
                               childnodes[node_id]))
+        outputFile.write((space+form2.format(node_id, style[2]%lengths[node_id],
+                              style[3]%vertices[node_id], lowest_host_node[node_id],
+                              childnodes[node_id])))
     print ("-------------------------------------------------------------------------------------------")
     print ()
+    outputFile.write(("-------------------------------------------------------------------------------------------"))
+    outputFile.write(("\n"))
     
     # Report prints how many nodes were created
     # and how many body Ids they fit into. Also
@@ -206,9 +224,9 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    # Initialize the Quadtree
+    # Initialize the QuadTree
     # Uniform sets upper and lower limits
-    initiate((-5,-5), 10000000000000)
+    initiate((-5,-5), 10)
     r = range(4)
     n = (uniform(1,100) for i in r)
     p = ((uniform(-5,5),uniform(-5,5)) for i in r)
@@ -218,10 +236,10 @@ if __name__ == '__main__':
     for num, pos, child in zip(n, p, c):
         addbody(num, pos, child)
 
-    #Update Quadtree
+    #Update QuadTree
     update()
 
     period = time.time() - start
     
     # Print summary
-    summarize(line=True)
+    summarize(line=True)               
